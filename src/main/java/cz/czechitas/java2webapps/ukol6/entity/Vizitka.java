@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 
 @Entity
@@ -31,6 +32,7 @@ public class Vizitka {
     private String obec;
 
     @Length(max = 5)
+    @Pattern(regexp = "\\d{5}")
     @NotBlank
     private String psc;
 

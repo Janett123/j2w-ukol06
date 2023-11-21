@@ -4,13 +4,11 @@ import cz.czechitas.java2webapps.ukol6.entity.Vizitka;
 import cz.czechitas.java2webapps.ukol6.repository.VizitkaRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Optional;
@@ -35,31 +33,24 @@ public class VizitkaController {
         return new ModelAndView("seznam")
                 .addObject("seznamVizitek", vizitkaRepository.findAll());
     }
-//načtení jednotlivých vizitek
-    @GetMapping("/detail/{id:[0-9]+}")
-    public ModelAndView vizitka(@PathVariable int id) {
+
+    //načtení jednotlivých vizitek
+    @GetMapping("/{id:[0-9]+}")
+    public Object vizitka(@PathVariable int id) {
         Optional<Vizitka> nactenaVizitka = vizitkaRepository.findById(id);
         if (nactenaVizitka.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         }
-
         return new ModelAndView("vizitka")
                 .addObject("vizitka", nactenaVizitka.get());
+    }
 
-    }
     @GetMapping("/nova")
-    public String nova() {
-        return "formular";
+    public ModelAndView nova() {
+        return new ModelAndView("formular")
+                .addObject("vizitka", new Vizitka());
     }
-    /*
-    @GetMapping("/nova")
-    public ModelAndView formular() {
-        ModelAndView modelAndView = new ModelAndView("/formular");
-        return modelAndView;
-    }
-    */
 
-/*
     @PostMapping("/nova")
     public String pridat(@ModelAttribute("vizitka") @Valid Vizitka vizitka, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -69,5 +60,4 @@ public class VizitkaController {
         vizitkaRepository.save(vizitka);
         return "redirect:/";
     }
-     */
 }
