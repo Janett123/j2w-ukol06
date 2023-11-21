@@ -16,7 +16,7 @@ public class Vizitka {
 
     @Length(max = 100)
     @NotBlank
-    private String CeleJmeno;
+    private String celeJmeno;
 
     @Length(max = 100)
     @NotBlank
@@ -44,6 +44,9 @@ public class Vizitka {
     @Length(max = 100)
     private String web;
 
+    public Vizitka() {
+    }
+
     public Integer getId() {
         return id;
     }
@@ -53,11 +56,11 @@ public class Vizitka {
     }
 
     public String getCeleJmeno() {
-        return CeleJmeno;
+        return celeJmeno;
     }
 
     public void setCeleJmeno(String celeJmeno) {
-        CeleJmeno = celeJmeno;
+        this.celeJmeno = celeJmeno;
     }
 
     public String getFirma() {
